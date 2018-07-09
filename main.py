@@ -1,7 +1,6 @@
 import cv2
 import numpy as np
 from matplotlib import pyplot as plt
-from sympy import symbols, Derivative
 
 def a(y):
     pass
@@ -26,15 +25,18 @@ center=cedt[3]
 crc=cv2.cvtColor(cr_img,cv2.COLOR_GRAY2BGR)
 #imgg=cv2.drawContours(crc,[hu],0,[0,255,0])
 dt=((ds-ds.min())/(ds.max()-ds.min())*255).astype(np.uint8)
+dt=cv2.resize(dt,None,fx=0.5,fy=0.5,interpolation=cv2.INTER_AREA)
 cv2.blur(dt,(4,4))
+xn=dt.shape
+i=0
+dts=list()
+while(i<xn[1]):
+    for j in dt[i]:
+
 cv2.namedWindow("x")
 cv2.createTrackbar("x","x",0,len(dt[2])-1,a)
 xx=0
-#K=symbols("K")
-#fuc=dt[1][K]
-#mibon=Derivative(fuc,K).doit()
-print(dt.shape)
-print(dt[257])
+print(dt)
 kk=1
 if kk==1:
     while(1):
@@ -42,7 +44,7 @@ if kk==1:
         cv2.imshow("hand", cr_img)
         cv2.imshow("joint", dt)
         cv2.imshow("x",dt[xx])
-        plt.plot(dt[257])
+        plt.plot(dt[126])
         plt.show()
         if cv2.waitKey(1) and 0xFF==ord("q"):
             break
